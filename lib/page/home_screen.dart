@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:story_book/layout/footer_bar.dart';
+import 'package:story_book/page/sinopsis_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +13,30 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selectedTabIndex = 0;
   bool isAllSelected = false;
+  int _selectedIndex = 0;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (_selectedIndex == 1) {
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const Category()),
+      // );
+    } else if (_selectedIndex == 2) {
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const Order()),
+      // );
+    } else if (_selectedIndex == 3) {
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const Akun()),
+      // );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,20 +70,23 @@ class _HomeState extends State<Home> {
             decoration: BoxDecoration(
               color: Color(0xffffffff),
             ),
-            child: Stack(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Positioned(
-                  left: 20,
+                Container(
+                  margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.05, 0, 0, 0),
+                  width: double.infinity,
                   child: Container(
                     width: 378,
-                    height: 128,
+                    height: MediaQuery.of(context).size.height * 0.08,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: 6,
+                            itemCount: 12,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
@@ -119,20 +148,19 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: 0,
-                  top: 85,
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Container(
-                    width: 437,
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.45,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 61.5, 5),
-                          padding: EdgeInsets.fromLTRB(20, 13.5, 20, 13.5),
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           width: double.infinity,
-                          height: 80,
+                          height: 70,
                           decoration: BoxDecoration(
                             color: Color(0xffffffff),
                           ),
@@ -141,7 +169,8 @@ class _HomeState extends State<Home> {
                             children: [
                               Container(
                                 // bestsellingbooks1w1 (0:118)
-                                margin: EdgeInsets.fromLTRB(0, 0, 124, 0),
+                                margin: EdgeInsets.fromLTRB(0, 0,
+                                    MediaQuery.of(context).size.width * 0.4, 0),
                                 child: Text(
                                   'Best Folklore',
                                   style: GoogleFonts.plusJakartaSans(
@@ -225,7 +254,7 @@ class _HomeState extends State<Home> {
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                                 child: Image.asset(
-                                                  'assets/images/q2yxj21v8nACZBEtNTOK-o.jpg',
+                                                  'assets/images/d89d2d3f3a0467ff95704e27bcd702bb.jpg',
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -243,7 +272,7 @@ class _HomeState extends State<Home> {
                                                     margin: EdgeInsets.fromLTRB(
                                                         0, 5, 0, 5.5),
                                                     child: Text(
-                                                      'Displacement',
+                                                      'Peter Pan',
                                                       style: GoogleFonts
                                                           .plusJakartaSans(
                                                         fontSize: 12,
@@ -287,6 +316,13 @@ class _HomeState extends State<Home> {
                                                     ),
                                                     child: TextButton(
                                                       onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const Sinopsis(),
+                                                          ),
+                                                        );
                                                         // if (rekomendasy
                                                         //         .kdBarang !=
                                                         //     null) {
@@ -302,7 +338,7 @@ class _HomeState extends State<Home> {
                                                       },
                                                       child: Center(
                                                         child: Text(
-                                                          'Read',
+                                                          'Sinopsis',
                                                           style: GoogleFonts
                                                               .plusJakartaSans(
                                                             fontSize: 10,
@@ -333,12 +369,11 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: 0,
-                  top: MediaQuery.of(context).size.height * 0.5,
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Container(
-                    width: 437,
-                    height: 369.5,
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.45,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -355,7 +390,11 @@ class _HomeState extends State<Home> {
                             children: [
                               Container(
                                 // trendingnow1cX (0:78)
-                                margin: EdgeInsets.fromLTRB(0, 0, 60, 0),
+                                margin: EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    MediaQuery.of(context).size.width * 0.22,
+                                    0),
                                 child: Text(
                                   'Language Sumbawa',
                                   style: GoogleFonts.plusJakartaSans(
@@ -439,7 +478,7 @@ class _HomeState extends State<Home> {
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                                 child: Image.asset(
-                                                  'assets/images/q2yxj21v8nACZBEtNTOK-o.jpg',
+                                                  'assets/images/af03243d0b3993f35e09c17b3029c9dd.jpg',
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -457,7 +496,7 @@ class _HomeState extends State<Home> {
                                                     margin: EdgeInsets.fromLTRB(
                                                         0, 5, 0, 5.5),
                                                     child: Text(
-                                                      'Displacement',
+                                                      'Cinderela',
                                                       style: GoogleFonts
                                                           .plusJakartaSans(
                                                         fontSize: 12,
@@ -501,6 +540,13 @@ class _HomeState extends State<Home> {
                                                     ),
                                                     child: TextButton(
                                                       onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const Sinopsis(),
+                                                          ),
+                                                        );
                                                         // if (rekomendasy
                                                         //         .kdBarang !=
                                                         //     null) {
@@ -516,7 +562,7 @@ class _HomeState extends State<Home> {
                                                       },
                                                       child: Center(
                                                         child: Text(
-                                                          'Read',
+                                                          'Sinopsis',
                                                           style: GoogleFonts
                                                               .plusJakartaSans(
                                                             fontSize: 10,
@@ -547,17 +593,15 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: 0,
-                  top: 571,
-                  child: Container(),
-                ),
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: MyBottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTabTapped: _onTabTapped,
         ),
       ),
     );
   }
 }
-
