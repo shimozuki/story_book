@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:story_book/layout/footer_bar.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:story_book/page/quiz/quiz_screen.dart';
+import 'package:story_book/page/quiz_screen.dart';
 
 class Story extends StatefulWidget {
   const Story({super.key});
@@ -11,7 +12,6 @@ class Story extends StatefulWidget {
 }
 
 class _StoryState extends State<Story> {
-  int _selectedIndex = 0;
 
   final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
 
@@ -42,27 +42,27 @@ class _StoryState extends State<Story> {
     }
   }
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    if (_selectedIndex == 1) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Category()),
-      // );
-    } else if (_selectedIndex == 2) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Order()),
-      // );
-    } else if (_selectedIndex == 3) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Akun()),
-      // );
-    }
-  }
+  // void _onTabTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  //   if (_selectedIndex == 1) {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const Home()),
+  //     );
+  //   } else if (_selectedIndex == 2) {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const Home()),
+  //     );
+  //   } else if (_selectedIndex == 3) {
+  //     // Navigator.push(
+  //     //   context,
+  //     //   MaterialPageRoute(builder: (context) => const Akun()),
+  //     // );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +175,102 @@ class _StoryState extends State<Story> {
             ),
           ),
         ),
-        bottomNavigationBar: MyBottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTabTapped: _onTabTapped,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
+          child: Container(
+            // checkoutwrapperf6X (175:297)
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            width: double.infinity,
+            height: 66,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color.fromARGB(51, 207, 207, 207)),
+              color: Color(0xffffffff),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    // final userProvider =
+                    //     Provider.of<UserProvider>(context, listen: false);
+
+                    // List<Map<String, dynamic>> selectedItems =
+                    //     _template.map((item) {
+                    //   return {
+                    //     "kdBarang": item["kd_barang"],
+                    //     "kdSatuan": item["kd_satuan"],
+                    //     "qty": item["qty"],
+                    //   };
+                    // }).toList();
+
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => SelectTemplateCart(
+                    //       selectedItems: selectedItems,
+                    //       token: userProvider.user!.mobToken,
+                    //     ),
+                    //   ),
+                    // );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          40), // set border radius menjadi setengah dari width/height
+                      border: Border.all(
+                          color: Color(0xff8599ff), width: 2), // set border
+                    ),
+                    // frame59xbR (175:298)
+                    width: 46,
+                    height: 46,
+                    child: Icon(
+                      Icons.share,
+                      color: Color(0xff8599ff),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizScreen(),
+                      ),
+                    );
+                    // if (_jenis_user == 1) {
+                    //   checkout();
+                    // } else if (_jenis_user == 2) {
+                    //   approver();
+                    // } else if (_jenis_user == 3) {
+                    //   drafter();
+                    // }
+                  },
+                  child: Container(
+                    // frame60zo1 (175:306)
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Color(0xff8599ff),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Quiz',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 1.1725,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

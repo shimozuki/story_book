@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:story_book/layout/footer_bar.dart';
+import 'package:story_book/page/about_screen.dart';
+import 'package:story_book/page/quiz_screen.dart';
 import 'package:story_book/page/sinopsis_screen.dart';
+import 'package:story_book/page/upload_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,20 +23,20 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
     if (_selectedIndex == 1) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Category()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Quiz()),
+      );
     } else if (_selectedIndex == 2) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Order()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Upload()),
+      );
     } else if (_selectedIndex == 3) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Akun()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const About()),
+      );
     }
   }
 
