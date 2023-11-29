@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:story_book/layout/footer_bar.dart';
-import 'package:story_book/page/about_screen.dart';
 import 'package:story_book/page/home_screen.dart';
 import 'package:story_book/page/quiz/quiz_screen.dart';
 import 'package:story_book/page/upload_screen.dart';
@@ -31,12 +30,7 @@ class _QuizState extends State<Quiz> {
         context,
         MaterialPageRoute(builder: (context) => const Upload()),
       );
-    } else if (_selectedIndex == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const About()),
-      );
-    }
+    } 
   }
 
   @override

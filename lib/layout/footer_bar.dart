@@ -22,10 +22,6 @@ class MyBottomNavigationBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.quiz),
-          label: 'Quiz',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.book),
           label: 'Upload',
         ),

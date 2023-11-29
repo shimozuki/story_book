@@ -20,28 +20,23 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    if (_selectedIndex == 1) {
+    if (_selectedIndex == 2) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Quiz()),
+        MaterialPageRoute(builder: (context) => const About()),
       );
     } else if (_selectedIndex == 0) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Home()),
       );
-    } else if (_selectedIndex == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const About()),
-      );
-    }
+    } 
   }
   final _formKey = GlobalKey<FormState>();
 
@@ -134,7 +129,7 @@ class _UploadState extends State<Upload> {
             ),
           );
         });
-  }
+        }
 
   @override
   Widget build(BuildContext context) {
@@ -249,6 +244,159 @@ class _UploadState extends State<Upload> {
                             color: const Color(0x11000000),
                             borderRadius: BorderRadius.circular(50),
                           ),
+                          // ignore: sized_box_for_whitespace
+                          child: Container(
+                            width: 72,
+                            height: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        0, 2.5, 399, 0),
+                                    width: 24,
+                                    height: 24,
+                                    child: const Icon(
+                                      Icons.room,
+                                      color: Color.fromARGB(78, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(34, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: "Alamat",
+                                    ),
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    // onChanged: (value) => _name = value,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                         Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0x11000000),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          // ignore: sized_box_for_whitespace
+                          child: Container(
+                            width: 72,
+                            height: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        0, 2.5, 399, 0),
+                                    width: 24,
+                                    height: 24,
+                                    child: const Icon(
+                                      Icons.phone_android,
+                                      color: Color.fromARGB(78, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(34, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: "WhatsApp",
+                                    ),
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    // onChanged: (value) => _name = value,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0x11000000),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          // ignore: sized_box_for_whitespace
+                          child: Container(
+                            width: 72,
+                            height: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        0, 2.5, 399, 0),
+                                    width: 24,
+                                    height: 24,
+                                    child: const Icon(
+                                      Icons.email,
+                                      color: Color.fromARGB(78, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(34, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: "Email",
+                                    ),
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    // onChanged: (value) => _name = value,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0x11000000),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                           child: Container(
                             width: 134,
                             height: double.infinity,
@@ -285,6 +433,41 @@ class _UploadState extends State<Upload> {
                                     },
                                     // onChanged: (value) =>
                                     //     _nama_perusahaan = value,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
+                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0x11000000),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: GestureDetector(
+                            onTap: _pickFile,
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 2.5, 10, 0),
+                                  width: 24,
+                                  height: 24,
+                                  child: const Icon(
+                                    Icons.audio_file,
+                                    color: Color.fromARGB(78, 0, 0, 0),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    _selectedFilePath != null
+                                        ? _selectedFilePath!
+                                        : "Choose a Audio (optional)",
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],

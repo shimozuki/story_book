@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, unused_import
 
 import 'dart:ui';
 
@@ -11,11 +11,7 @@ import 'package:story_book/layout/footer_bar.dart';
 import 'package:story_book/page/home_screen.dart';
 import 'package:story_book/page/quiz_screen.dart';
 import 'package:story_book/page/upload_screen.dart';
-// import 'package:surat_meyurat/network/user_provider.dart';
-// import 'package:surat_meyurat/page/home_page.dart';
-// import 'package:surat_meyurat/page/kepaladesa.dart';
-// import 'package:surat_meyurat/page/setting_page.dart';
-// import 'package:surat_meyurat/page/unggah_berkas_page.dart';
+
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -26,28 +22,23 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
   bool isAddButtonClicked = false;
-  int _selectedIndex = 3;
+  int _selectedIndex = 2;
 
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    if (_selectedIndex == 1) {
-      Navigator.push(
+    if (_selectedIndex == 0) {
+     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Quiz()),
+        MaterialPageRoute(builder: (context) => const Home()),
       );
-    } else if (_selectedIndex == 2) {
+    } else if (_selectedIndex == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Upload()),
       );
-    } else if (_selectedIndex == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Home()),
-      );
-    }
+    } 
   }
 
   @override
