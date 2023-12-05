@@ -71,81 +71,6 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.05, 0, 0, 0),
-                  width: double.infinity,
-                  child: Container(
-                    width: 378,
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 12,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    // Update the selected item index
-                                    selectedTabIndex = index;
-                                    // Update isAllSelected based on the selected item
-                                    isAllSelected = false;
-                                  });
-                                },
-                                child: Container(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 78,
-                                        height: 38,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xffe9ecef),
-                                          ),
-                                          color: selectedTabIndex == index
-                                              ? Color(0xff8599ff)
-                                              : isAllSelected
-                                                  ? Color(0xff8599ff)
-                                                  : Color(0xffffffff),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'Horror',
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.1725,
-                                              color: selectedTabIndex == index
-                                                  ? Colors
-                                                      .white // Text color when clicked
-                                                  : isAllSelected
-                                                      ? Colors.white
-                                                      : Color(0xff000000),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Container(
                     width: double.infinity,
@@ -402,40 +327,40 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                // seeallwZm (0:119)
-                                margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                                height: double.infinity,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // seeallHNj (0:120)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                      child: Text(
-                                        'See all',
-                                        textAlign: TextAlign.right,
-                                        style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.26,
-                                          color: Color(0xff8599ff),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      // vector1Pgf (0:121)
-                                      width: 3.5,
-                                      height: 7,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        size: 10,
-                                        color: Color(0xff8599ff),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   // seeallwZm (0:119)
+                              //   margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                              //   height: double.infinity,
+                              //   child: Row(
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       Container(
+                              //         // seeallHNj (0:120)
+                              //         margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              //         child: Text(
+                              //           'See all',
+                              //           textAlign: TextAlign.right,
+                              //           style: GoogleFonts.plusJakartaSans(
+                              //             fontSize: 13,
+                              //             fontWeight: FontWeight.w700,
+                              //             height: 1.26,
+                              //             color: Color(0xff8599ff),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Container(
+                              //         // vector1Pgf (0:121)
+                              //         width: 3.5,
+                              //         height: 7,
+                              //         child: Icon(
+                              //           Icons.arrow_forward_ios_outlined,
+                              //           size: 10,
+                              //           color: Color(0xff8599ff),
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

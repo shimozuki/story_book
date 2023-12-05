@@ -49,9 +49,9 @@ class _SplashState extends State<Splash> {
                         maxWidth: 261,
                       ),
                       child: Text(
-                        'Read your favourite book from here.',
+                        'Baca dan lestarikan cerita rakyat sumbawa.',
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 30,
+                          fontSize: 26,
                           fontWeight: FontWeight.w800,
                           height: 1.26,
                           color: Color(0xffffffff),
@@ -65,7 +65,7 @@ class _SplashState extends State<Splash> {
                         maxWidth: 250,
                       ),
                       child: Text(
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                        'Aplikasi cerita rakyat sumbawa, jendela ajaib ke dunia digital budaya loka.',
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
