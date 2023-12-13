@@ -1,9 +1,13 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:story_book/layout/footer_bar.dart';
+import 'package:story_book/models/cerita_model.dart';
 import 'package:story_book/page/about_screen.dart';
 import 'package:story_book/page/sinopsis_screen.dart';
 import 'package:story_book/page/upload_screen.dart';
+import 'package:story_book/controllers/cerita_controller.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,6 +20,7 @@ class _HomeState extends State<Home> {
   int selectedTabIndex = 0;
   bool isAllSelected = false;
   int _selectedIndex = 0;
+  final CeritaController ceritaController = CeritaController();
 
   void _onTabTapped(int index) {
     setState(() {
@@ -31,7 +36,7 @@ class _HomeState extends State<Home> {
         context,
         MaterialPageRoute(builder: (context) => const About()),
       );
-    } 
+    }
   }
 
   @override
@@ -40,25 +45,19 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Folklore Of Sumbawa',
+            'Cerita Rakyat Sumbawa',
             style: GoogleFonts.plusJakartaSans(
               fontSize: 18,
               fontWeight: FontWeight.w800,
               height: 1.26,
               color: Color(0xff141e47),
             ),
+            textAlign: TextAlign.left, // Set the text alignment to left
           ),
           backgroundColor: Color(0xffffffff),
           elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.menu_outlined,
-              color: Color(0xff141e47),
-            ),
-            onPressed: () {
-              print('Hamburger icon clicked!');
-            },
-          ),
+          leading: null,
+          titleSpacing: -20,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -94,7 +93,7 @@ class _HomeState extends State<Home> {
                                 margin: EdgeInsets.fromLTRB(0, 0,
                                     MediaQuery.of(context).size.width * 0.4, 0),
                                 child: Text(
-                                  'Best Folklore',
+                                  'Semua Cerita',
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
@@ -141,137 +140,157 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 6,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    // // Update the selected item index
-                                    // selectedTabIndex = index;
-                                    // // Update isAllSelected based on the selected item
-                                    // isAllSelected = false;
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  height: 299.5,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 129,
-                                        height: double.infinity,
-                                        child: Column(
+                          child: FutureBuilder<List<CeritaModel>>(
+                            future: ceritaController.fetchCeritaData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // While data is being fetched, show a loading indicator
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                // If there's an error, show an error message
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                List<CeritaModel> ceritaList = snapshot.data!;
+                                return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: ceritaList.length,
+                                  itemBuilder: (context, index) {
+                                    CeritaModel cerita = ceritaList[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          // // Update the selected item index
+                                          // selectedTabIndex = index;
+                                          // // Update isAllSelected based on the selected item
+                                          // isAllSelected = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                        height: 299.5,
+                                        child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
                                             Container(
-                                              // rectangle8dqu (0:85)
                                               width: 129,
-                                              height: 194,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                                child: Image.asset(
-                                                  'assets/images/d89d2d3f3a0467ff95704e27bcd702bb.jpg',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  5, 0, 5, 0),
-                                              width: double.infinity,
+                                              height: double.infinity,
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
-                                                    // displacementhZm (0:86)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 5, 0, 5.5),
-                                                    child: Text(
-                                                      'Peter Pan',
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 1.26,
-                                                        color:
-                                                            Color(0xff141e47),
+                                                    // rectangle8dqu (0:85)
+                                                    width: 129,
+                                                    height: 194,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6),
+                                                      child: Image.network(
+                                                        'https://lombokfuntransport.com/back_office_story_book/${cerita.featuredImage.original}',
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                   ),
                                                   Container(
                                                     margin: const EdgeInsets
-                                                        .fromLTRB(
-                                                        0, 0, 0, 6.05),
-                                                    child: Text(
-                                                      'Story Creator',
-                                                      style: GoogleFonts.roboto(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.1725,
-                                                        color: const Color(
-                                                            0xff000000),
-                                                      ),
-                                                      maxLines:
-                                                          1, // Mengatur maksimum 2 baris
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  Container(
+                                                        .fromLTRB(5, 0, 5, 0),
                                                     width: double.infinity,
-                                                    height: 28.5,
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xff8599ff),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6.5),
-                                                    ),
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const Sinopsis(),
-                                                          ),
-                                                        );
-                                                        // if (rekomendasy
-                                                        //         .kdBarang !=
-                                                        //     null) {
-                                                        //   print(rekomendasy
-                                                        //       .kdBarang);
-                                                        //   showAddChartModal(
-                                                        //       context,
-                                                        //       rekomendasy
-                                                        //           .kdBarang!);
-                                                        // } else {
-                                                        //   print("Null");
-                                                        // }
-                                                      },
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Sinopsis',
-                                                          style: GoogleFonts
-                                                              .plusJakartaSans(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            height: 1.1725,
-                                                            color: const Color(
-                                                                0xffffffff),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          // displacementhZm (0:86)
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 5, 0, 5.5),
+                                                          child: Text(
+                                                            '${cerita.title}',
+                                                            style: GoogleFonts
+                                                                .plusJakartaSans(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              height: 1.26,
+                                                              color: Color(
+                                                                  0xff141e47),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(0,
+                                                                  0, 0, 6.05),
+                                                          child: Text(
+                                                            'Wahyudi',
+                                                            style: GoogleFonts
+                                                                .roboto(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              height: 1.1725,
+                                                              color: const Color(
+                                                                  0xff000000),
+                                                            ),
+                                                            maxLines:
+                                                                1, // Mengatur maksimum 2 baris
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 28.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color(
+                                                                0xff8599ff),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.5),
+                                                          ),
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      Sinopsis(
+                                                                          id: cerita
+                                                                              .id),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Center(
+                                                              child: Text(
+                                                                'Sinopsis',
+                                                                style: GoogleFonts
+                                                                    .plusJakartaSans(
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  height:
+                                                                      1.1725,
+                                                                  color: const Color(
+                                                                      0xffffffff),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],
@@ -280,10 +299,10 @@ class _HomeState extends State<Home> {
                                           ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                    );
+                                  },
+                                );
+                              }
                             },
                           ),
                         )
@@ -318,7 +337,7 @@ class _HomeState extends State<Home> {
                                     MediaQuery.of(context).size.width * 0.22,
                                     0),
                                 child: Text(
-                                  'Language Sumbawa',
+                                  'Cerita Populer',
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
@@ -327,190 +346,186 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              // Container(
-                              //   // seeallwZm (0:119)
-                              //   margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                              //   height: double.infinity,
-                              //   child: Row(
-                              //     crossAxisAlignment: CrossAxisAlignment.center,
-                              //     children: [
-                              //       Container(
-                              //         // seeallHNj (0:120)
-                              //         margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                              //         child: Text(
-                              //           'See all',
-                              //           textAlign: TextAlign.right,
-                              //           style: GoogleFonts.plusJakartaSans(
-                              //             fontSize: 13,
-                              //             fontWeight: FontWeight.w700,
-                              //             height: 1.26,
-                              //             color: Color(0xff8599ff),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       Container(
-                              //         // vector1Pgf (0:121)
-                              //         width: 3.5,
-                              //         height: 7,
-                              //         child: Icon(
-                              //           Icons.arrow_forward_ios_outlined,
-                              //           size: 10,
-                              //           color: Color(0xff8599ff),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 6,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    // // Update the selected item index
-                                    // selectedTabIndex = index;
-                                    // // Update isAllSelected based on the selected item
-                                    // isAllSelected = false;
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  height: 299.5,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 129,
-                                        height: double.infinity,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              // rectangle8dqu (0:85)
-                                              width: 129,
-                                              height: 194,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                                child: Image.asset(
-                                                  'assets/images/af03243d0b3993f35e09c17b3029c9dd.jpg',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  5, 0, 5, 0),
-                                              width: double.infinity,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    // displacementhZm (0:86)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 5, 0, 5.5),
-                                                    child: Text(
-                                                      'Cinderela',
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 1.26,
-                                                        color:
-                                                            Color(0xff141e47),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                        .fromLTRB(
-                                                        0, 0, 0, 6.05),
-                                                    child: Text(
-                                                      'Story Creator',
-                                                      style: GoogleFonts.roboto(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.1725,
-                                                        color: const Color(
-                                                            0xff000000),
-                                                      ),
-                                                      maxLines:
-                                                          1, // Mengatur maksimum 2 baris
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: double.infinity,
-                                                    height: 28.5,
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xff8599ff),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6.5),
-                                                    ),
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const Sinopsis(),
-                                                          ),
-                                                        );
-                                                        // if (rekomendasy
-                                                        //         .kdBarang !=
-                                                        //     null) {
-                                                        //   print(rekomendasy
-                                                        //       .kdBarang);
-                                                        //   showAddChartModal(
-                                                        //       context,
-                                                        //       rekomendasy
-                                                        //           .kdBarang!);
-                                                        // } else {
-                                                        //   print("Null");
-                                                        // }
-                                                      },
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Sinopsis',
-                                                          style: GoogleFonts
-                                                              .plusJakartaSans(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            height: 1.1725,
-                                                            color: const Color(
-                                                                0xffffffff),
+                            child: FutureBuilder<List<CeritaModel>>(
+                                future: ceritaController.fetchCeritaData(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    // While data is being fetched, show a loading indicator
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    // If there's an error, show an error message
+                                    return Text('Error: ${snapshot.error}');
+                                  } else {
+                                    List<CeritaModel> ceritaList =
+                                        snapshot.data!;
+                                    return ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: ceritaList.length,
+                                      itemBuilder: (context, index) {
+                                        CeritaModel cerita = ceritaList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              // // Update the selected item index
+                                              // selectedTabIndex = index;
+                                              // // Update isAllSelected based on the selected item
+                                              // isAllSelected = false;
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                20, 0, 0, 0),
+                                            height: 299.5,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 129,
+                                                  height: double.infinity,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        // rectangle8dqu (0:85)
+                                                        width: 129,
+                                                        height: 194,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6),
+                                                          child: Image.network(
+                                                            'https://lombokfuntransport.com/back_office_story_book/${cerita.featuredImage.original}',
+                                                            fit: BoxFit.cover,
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .fromLTRB(
+                                                            5, 0, 5, 0),
+                                                        width: double.infinity,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Container(
+                                                              // displacementhZm (0:86)
+                                                              margin: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      0,
+                                                                      5,
+                                                                      0,
+                                                                      5.5),
+                                                              child: Text(
+                                                                '${cerita.title}',
+                                                                style: GoogleFonts
+                                                                    .plusJakartaSans(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  height: 1.26,
+                                                                  color: Color(
+                                                                      0xff141e47),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      6.05),
+                                                              child: Text(
+                                                                'Wahyudi',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .roboto(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  height:
+                                                                      1.1725,
+                                                                  color: const Color(
+                                                                      0xff000000),
+                                                                ),
+                                                                maxLines:
+                                                                    1, // Mengatur maksimum 2 baris
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 28.5,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0xff8599ff),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6.5),
+                                                              ),
+                                                              child: TextButton(
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          Sinopsis(
+                                                                              id: cerita.id),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Sinopsis',
+                                                                    style: GoogleFonts
+                                                                        .plusJakartaSans(
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      height:
+                                                                          1.1725,
+                                                                      color: const Color(
+                                                                          0xffffffff),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                })),
                       ],
                     ),
                   ),

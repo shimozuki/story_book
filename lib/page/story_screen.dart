@@ -1,13 +1,16 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:story_book/controllers/detail_controller.dart';
+import 'package:story_book/models/detail_model.dart';
 import 'package:story_book/page/quiz/quiz_screen.dart';
 import 'package:story_book/page/quiz_screen.dart';
 
 class Story extends StatefulWidget {
-  const Story({super.key});
+  final int id;
+  const Story({required this.id, Key? key}) : super(key: key);
 
   @override
   State<Story> createState() => _StoryState();
@@ -16,23 +19,67 @@ class Story extends StatefulWidget {
 class _StoryState extends State<Story> {
   final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
   bool isQuizButtonEnabled = true;
+  DetailModel? detailData;
+  late String modifiedTitle = '';
 
   @override
   void initState() {
     super.initState();
-
-    audioPlayer.open(
-      Audio('assets/images/story.mp3'),
-      autoStart: false,
-      showNotification: true,
+     _fetchDetailData();
+    detailData = DetailModel(
+      id: 0,
+      title: '',
+      ceritaIndo: '',
+      ceritaSwq: '',
+      featuredImage: FeaturedImage(
+        original: '',
+        thumb: '',
+        medium: '',
+        url: null, // or provide a default URL if applicable
+      ),
+      background: '',
+      featuredAudio: '',
+      active: '',
+      userId: '',
+      featuredPost: '',
+      createdAt: DateTime.now(), // Set to the current date and time
+      updatedAt: DateTime.now(), // Set to the current date and time
     );
-    audioPlayer.play();
+   
   }
 
   @override
   void dispose() {
     audioPlayer.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchDetailData() async {
+    final DetailController detailController = DetailController();
+
+    try {
+      final DetailModel? data = await detailController.fetchData(widget.id);
+      setState(() {
+        detailData = data;
+        modifiedTitle = detailData!.ceritaIndo
+            .replaceAll('.', '\n')
+            .replaceAll('..', '\n\n');
+        // indo =
+        //     detailData.lirikIndo.replaceAll('.', '\n').replaceAll('..', '\n\n');
+      });
+
+      if (detailData!.featuredAudio.isNotEmpty) {
+        audioPlayer.open(
+          Audio.network(
+              'https://lombokfuntransport.com/lawas_backoffice/${detailData!.featuredAudio}'),
+          autoStart: false,
+          showNotification: true,
+        );
+        audioPlayer.play();
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
   }
 
   // Fungsi untuk memainkan atau menghentikan audio
@@ -66,7 +113,7 @@ class _StoryState extends State<Story> {
           actions: [
             IconButton(
               icon: Icon(audioPlayer.isPlaying.value
-                  ? Icons.pause
+                  ? Icons.pause_circle
                   : Icons.play_circle),
               onPressed: toggleAudio,
             ),
@@ -101,7 +148,7 @@ class _StoryState extends State<Story> {
                     // chapteroneaEX (10:1169)
                     margin: EdgeInsets.fromLTRB(0, 0, 1, 29),
                     child: Text(
-                      'Chapter One',
+                      '${detailData?.title ?? ''}',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 28,
                         fontWeight: FontWeight.w500,
@@ -155,7 +202,7 @@ class _StoryState extends State<Story> {
                         children: [
                           TextSpan(
                             text:
-                                'The Never Land adalah tempat yang indah. Ada peri yang hidup di puncak pohon dan putri duyung berenang di laguna. Ada orang Indian merah asli di sebuah desa di tebing dan hutan penuh binatang liar. Yang terbaik dari semuanya, ada kapal-kapal penuh perompak dengan pemimpin yang sangat jahat, Kapten Hook.\n \n Wendy, John, dan Michael tahu pada pandangan pertama bahwa mereka akan mencintai Never Land. Mereka menyukai rumah bawah tanah Peter, dengan banyak pintu tersembunyi di pohon berlubang besar. Di sana mereka bertemu the Lost Boys yang berbagi rumah dengan Peter.\n \n Semua anak lelaki senang bahwa Wendy datang untuk menceritakan kisah pengantar tidur kepada mereka, tetapi mereka tidak menghabiskan banyak waktu di rumah bawah tanah itu. Ada terlalu banyak hal menarik untuk dilakukan. \n \n Kadang-kadang mereka bermain perang dengan orang-orang Indian merah, yang adalah teman baik mereka. Kadang-kadang mereka memiliki masalah dengan para perompak yang jahat, yang adalah musuh mereka. \n \n Suatu hari para perompak mencuri Putri Tiger Lily dari suku Indian. Kepala India, ayahnya, sangat kesal tetapi Peter Pan menyelamatkan Tiger Lily dan membawanya pulang dengan selamat. \n \n Ini membuat Kapten Hook, pemimpin bajak laut marah pada Peter, lebih dari sebelumnya.\n \n Dia menculik Wendy, John, Michael dan the lost boys ketika Peter pergi. Dia membawa mereka ke kapalnya. \n \n Hook memutuskan untuk membuangnya dari kapal. Wendy yakin bahwa Peter akan menyelamatkan mereka. Pada menit terakhir, Peter muncul. \n \n Dia mengalahkan Kapten Hook dan membebaskan semua temannya. Mereka menakuti para perompak jahat itu untuk melompat ke laut dan mendayung pergi dengan perahu mereka.\n \n Sekarang, mereka mendapatkan kapal bajak laut. Wendy memutuskan untuk pulang. Dengan harapan dan sedikit debu peri, mereka membuat kapal bajak laut itu terbang! Mereka semua berlayar di kapal itu melalui langit ke jendela kamar anak lagi. \n \n Orang tua anak-anak hampir tidak percaya bahwa anak-anak mereka pernah ke Never Land. Wendy, John, dan Michael tidak pernah melupakan Peter Pan bahkan setelah mereka dewasa.  \n \n',
+                                '${detailData?.ceritaIndo ?? ''}',
                           ),
                           WidgetSpan(
                             child: SizedBox(height: 16),
@@ -183,48 +230,29 @@ class _StoryState extends State<Story> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {
-                    // final userProvider =
-                    //     Provider.of<UserProvider>(context, listen: false);
-
-                    // List<Map<String, dynamic>> selectedItems =
-                    //     _template.map((item) {
-                    //   return {
-                    //     "kdBarang": item["kd_barang"],
-                    //     "kdSatuan": item["kd_satuan"],
-                    //     "qty": item["qty"],
-                    //   };
-                    // }).toList();
-
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SelectTemplateCart(
-                    //       selectedItems: selectedItems,
-                    //       token: userProvider.user!.mobToken,
-                    //     ),
-                    //   ),
-                    // );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                          40), // set border radius menjadi setengah dari width/height
-                      border: Border.all(
-                          color: Color(0xff8599ff), width: 2), // set border
-                    ),
-                    // frame59xbR (175:298)
-                    width: 46,
-                    height: 46,
-                    child: Icon(
-                      Icons.share,
-                      color: Color(0xff8599ff),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
+                // InkWell(
+                //   onTap: () {
+                
+                //   },
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(
+                //           40), // set border radius menjadi setengah dari width/height
+                //       border: Border.all(
+                //           color: Color(0xff8599ff), width: 2), // set border
+                //     ),
+                //     // frame59xbR (175:298)
+                //     width: 46,
+                //     height: 46,
+                //     child: Icon(
+                //       Icons.share,
+                //       color: Color(0xff8599ff),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: 10,
+                // ),
                 InkWell(
                   onTap: isQuizButtonEnabled
                       ? null
@@ -238,7 +266,7 @@ class _StoryState extends State<Story> {
                         },
                   child: Container(
                     // frame60zo1 (175:306)
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: double.infinity,
                     decoration: BoxDecoration(
                       color:

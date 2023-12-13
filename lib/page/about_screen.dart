@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:story_book/controllers/about_controller.dart';
 import 'package:story_book/layout/footer_bar.dart';
+import 'package:story_book/models/about_model.dart';
 import 'package:story_book/page/home_screen.dart';
 import 'package:story_book/page/quiz_screen.dart';
 import 'package:story_book/page/upload_screen.dart';
-
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -23,13 +24,36 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   bool isAddButtonClicked = false;
   int _selectedIndex = 2;
+  AboutModel? aboutData;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAboutData();
+  }
+
+  void _fetchAboutData() async {
+    try {
+      AboutController aboutController = AboutController();
+      AboutModel? data = await aboutController.fetchData();
+
+      if (data != null) {
+        setState(() {
+          aboutData = data;
+        });
+        print(aboutData!.imageTitle);
+      }
+    } catch (e) {
+      print("Error fetching about data: $e");
+    }
+  }
 
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
     if (_selectedIndex == 0) {
-     Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Home()),
       );
@@ -38,7 +62,7 @@ class _AboutState extends State<About> {
         context,
         MaterialPageRoute(builder: (context) => const Upload()),
       );
-    } 
+    }
   }
 
   @override
@@ -70,60 +94,61 @@ class _AboutState extends State<About> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        width: 495,
-                        height: 324,
-                        child: Image.asset('assets/images/bg-10.jpg'),
-                      ),
-                      Container(
-                        // homeindicatorEVR (35461:438)
-                        margin: EdgeInsets.fromLTRB(163.5, 0, 180.5, 11),
-                        width: double.infinity,
-                        height: 5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Color.fromARGB(255, 62, 90, 243),
+                if (aboutData != null)
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          width: 495,
+                          height: 324,
+                          child: Image.network(
+                              'https://lombokfuntransport.com/back_office_story_book/${aboutData!.image}'),
                         ),
-                      ),
-                      Container(
-                        // imheretoquellyo9cP (35461:394)
-                        margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        constraints: BoxConstraints(
-                          maxWidth: 388,
-                        ),
-                        child: RichText(
-                          textAlign: TextAlign.justify,
-                          text: TextSpan(
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              height: 1.875,
-                              color: Color(0xff2e2f41),
-                            ),
-                            children: [
-                              TextSpan(
-                                text:
-                                    'Aplikasi cerita rakyat Sumbawa menjadi wadah digital yang memperkaya warisan budaya Indonesia. Dalam aplikasi ini, pengguna dapat menelusuri beragam kisah legendaris yang menggambarkan kekayaan sejarah dan nilai-nilai yang dipegang teguh oleh masyarakat Sumbawa. Dengan menggunakan teknologi modern, aplikasi ini tidak hanya menyajikan teks naratif, tetapi juga memperkaya pengalaman pembaca dengan elemen multimedia, seperti ilustrasi, audio, dan animasi yang memukau. Pengguna dapat menjelajahi mitos-mitos kuno, seperti kisah tentang Pulau Kenawa yang dipercaya sebagai tempat kelahiran Dewi Anjani, atau legenda mengenai awal mula terbentuknya Gunung Tambora yang terkenal. Melalui aplikasi cerita rakyat Sumbawa, kekayaan kultural dan warisan nenek moyang dapat terus hidup dan dihargai oleh generasi modern, sambil mendukung pelestarian dan penyebaran cerita-cerita yang mengandung makna mendalam bagi masyarakat Sumbawa.',
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.875,
-                                  color: Color(0xff2e2f41),
-                                ),
-                              ),
-                            ],
+                        Container(
+                          // homeindicatorEVR (35461:438)
+                          margin: EdgeInsets.fromLTRB(163.5, 0, 180.5, 11),
+                          width: double.infinity,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Color.fromARGB(255, 62, 90, 243),
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          // imheretoquellyo9cP (35461:394)
+                          margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          constraints: BoxConstraints(
+                            maxWidth: 388,
+                          ),
+                          child: RichText(
+                            textAlign: TextAlign.justify,
+                            text: TextSpan(
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                height: 1.875,
+                                color: Color(0xff2e2f41),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: '${aboutData!.imageTitle}',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.875,
+                                    color: Color(0xff2e2f41),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

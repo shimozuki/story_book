@@ -36,8 +36,9 @@ class _UploadState extends State<Upload> {
         context,
         MaterialPageRoute(builder: (context) => const Home()),
       );
-    } 
+    }
   }
+
   final _formKey = GlobalKey<FormState>();
 
   XFile? image;
@@ -129,7 +130,7 @@ class _UploadState extends State<Upload> {
             ),
           );
         });
-        }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,7 @@ class _UploadState extends State<Upload> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: Text(
-            'Upload Story',
+            'Tambah Cerita',
             style: GoogleFonts.plusJakartaSans(
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -286,7 +287,7 @@ class _UploadState extends State<Upload> {
                             ),
                           ),
                         ),
-                         Container(
+                        Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                           width: double.infinity,
@@ -474,6 +475,38 @@ class _UploadState extends State<Upload> {
                             ),
                           ),
                         ),
+                        TextButton(
+                          onPressed: () {
+                            // if (_isChecked &&
+                            //     _formKey.currentState!.validate()) {
+                            //   _formKey.currentState!.save();
+                            //   _registerUser();
+                            // }
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            width: double.infinity,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff8599ff),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Center(
+                              child: Center(
+                                child: Text(
+                                  "Download Template",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.1725,
+                                    color: const Color(0xffffffff),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -509,65 +542,128 @@ class _UploadState extends State<Upload> {
                             ),
                           ),
                         ),
-                        Container(
-                          // frame178aom (175:324)
-                          margin: EdgeInsets.fromLTRB(0, 0,
-                              MediaQuery.of(context).size.width * 0.5, 18),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 0, 9.5),
-                                child: Text(
-                                  'Images (Optional)',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.1725,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                              (image == null) // Cek apakah gambar sudah dipilih
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        myAlert();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.all(35.0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        primary:
-                                            Color.fromARGB(255, 230, 229, 229),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(
-                                            Icons.add,
-                                            color: Colors.grey.shade700,
-                                          ),
-                                          SizedBox(width: 1.0),
-                                        ],
-                                      ),
-                                    )
-                                  : Container(
-                                      width:
-                                          80, // Sesuaikan ukuran Container sesuai kebutuhan
-                                      height: 80,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        image: DecorationImage(
-                                          image: FileImage(File(image!.path)),
-                                          fit: BoxFit.cover,
-                                        ),
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 9.5),
+                                    child: Text(
+                                      'Gambar Sampul',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.1725,
+                                        color: Color(0xff000000),
                                       ),
                                     ),
-                            ],
-                          ),
+                                  ),
+                                  (image == null)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            myAlert();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(35.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            primary: Color.fromARGB(
+                                                255, 230, 229, 229),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.add,
+                                                color: Colors.grey.shade700,
+                                              ),
+                                              SizedBox(width: 1.0),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            image: DecorationImage(
+                                              image:
+                                                  FileImage(File(image!.path)),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 35,
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 9.5),
+                                    child: Text(
+                                      'Gambar Cerita',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.1725,
+                                        color: Color(0xff000000),
+                                      ),
+                                    ),
+                                  ),
+                                  (image == null)
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            myAlert();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.all(35.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            primary: Color.fromARGB(
+                                                255, 230, 229, 229),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.add,
+                                                color: Colors.grey.shade700,
+                                              ),
+                                              SizedBox(width: 1.0),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            image: DecorationImage(
+                                              image:
+                                                  FileImage(File(image!.path)),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                         TextButton(
                           onPressed: () {

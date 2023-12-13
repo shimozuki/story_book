@@ -49,9 +49,9 @@ class _SplashState extends State<Splash> {
                         maxWidth: 261,
                       ),
                       child: Text(
-                        'Baca dan lestarikan cerita rakyat sumbawa.',
+                        'Baca dan Lestarikan Cerita Rakyat Sumbawa.',
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 26,
+                          fontSize: 25,
                           fontWeight: FontWeight.w800,
                           height: 1.26,
                           color: Color(0xffffffff),
@@ -65,7 +65,7 @@ class _SplashState extends State<Splash> {
                         maxWidth: 250,
                       ),
                       child: Text(
-                        'Aplikasi cerita rakyat sumbawa, jendela ajaib ke dunia digital budaya loka.',
+                        'Aplikasi cerita rakyat Sumbawa, jendela ajaib ke dunia digital budaya loka.',
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
