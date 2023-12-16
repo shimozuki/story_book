@@ -109,20 +109,20 @@ class _HomeState extends State<Home> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      // seeallHNj (0:120)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                      child: Text(
-                                        'See all',
-                                        textAlign: TextAlign.right,
-                                        style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.26,
-                                          color: Color(0xff8599ff),
-                                        ),
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   // seeallHNj (0:120)
+                                    //   margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                    //   child: Text(
+                                    //     'See all',
+                                    //     textAlign: TextAlign.right,
+                                    //     style: GoogleFonts.plusJakartaSans(
+                                    //       fontSize: 13,
+                                    //       fontWeight: FontWeight.w700,
+                                    //       height: 1.26,
+                                    //       color: Color(0xff8599ff),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Container(
                                       // vector1Pgf (0:121)
                                       width: 3.5,

@@ -170,7 +170,7 @@ class _UploadState extends State<Upload> {
                     margin: EdgeInsets.fromLTRB(
                         25, MediaQuery.of(context).size.height * 0.1, 0, 0),
                     child: Text(
-                      'Upload Cerita dalam bentuk word atau pdf',
+                      'Tambah Cerita Sesuai Template yang ada',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -467,7 +467,7 @@ class _UploadState extends State<Upload> {
                                   child: Text(
                                     _selectedFilePath != null
                                         ? _selectedFilePath!
-                                        : "Choose a Audio (optional)",
+                                        : "Pilih Audio",
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -534,7 +534,7 @@ class _UploadState extends State<Upload> {
                                   child: Text(
                                     _selectedFilePath != null
                                         ? _selectedFilePath!
-                                        : "Choose a Word or PDF file",
+                                        : "Pilih Excel file",
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

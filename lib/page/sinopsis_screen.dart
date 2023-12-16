@@ -85,7 +85,7 @@ class _SinopsisState extends State<Sinopsis> {
                             left: 0,
                             top: 0,
                             child: Container(
-                              width: 393,
+                              width: 993,
                               height: MediaQuery.of(context).size.height * 0.5,
                               child: Stack(
                                 children: [
@@ -205,7 +205,7 @@ class _SinopsisState extends State<Sinopsis> {
                                   children: [
                                     Container(
                                       margin:
-                                          EdgeInsets.fromLTRB(0, 1.19, 0, 1.19),
+                                          EdgeInsets.fromLTRB(50, 1.19, 0, 1.19),
                                       padding: EdgeInsets.fromLTRB(
                                           5.5, 2.75, 5.5, 2.75),
                                       height: double.infinity,
@@ -236,29 +236,29 @@ class _SinopsisState extends State<Sinopsis> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                      // frame21U8T (10:1152)
-                                      width: 66,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffe2fbfa),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Fantasy',
-                                          style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.2125,
-                                            color: Color(0xff153337),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    // SizedBox(
+                                    //   width: 20,
+                                    // ),
+                                    // Container(
+                                    //   // frame21U8T (10:1152)
+                                    //   width: 66,
+                                    //   height: double.infinity,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Color(0xffe2fbfa),
+                                    //     borderRadius: BorderRadius.circular(8),
+                                    //   ),
+                                    //   child: Center(
+                                    //     child: Text(
+                                    //       'Fantasy',
+                                    //       style: GoogleFonts.plusJakartaSans(
+                                    //         fontSize: 12,
+                                    //         fontWeight: FontWeight.w500,
+                                    //         height: 1.2125,
+                                    //         color: Color(0xff153337),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                       width: 25,
                                     ),
@@ -302,7 +302,7 @@ class _SinopsisState extends State<Sinopsis> {
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
                                 child: Text(
-                                  'Synopsis',
+                                  'Sinopsis',
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
