@@ -10,7 +10,10 @@ import 'package:story_book/page/quiz_screen.dart';
 
 class Story extends StatefulWidget {
   final int id;
-  const Story({required this.id, Key? key}) : super(key: key);
+  final String language;
+
+  const Story({required this.id, required this.language, Key? key})
+      : super(key: key);
 
   @override
   State<Story> createState() => _StoryState();
@@ -21,11 +24,12 @@ class _StoryState extends State<Story> {
   bool isQuizButtonEnabled = true;
   DetailModel? detailData;
   late String modifiedTitle = '';
+  late String modifiedTitleswq = '';
 
   @override
   void initState() {
     super.initState();
-     _fetchDetailData();
+    _fetchDetailData();
     detailData = DetailModel(
       id: 0,
       title: '',
@@ -45,7 +49,6 @@ class _StoryState extends State<Story> {
       createdAt: DateTime.now(), // Set to the current date and time
       updatedAt: DateTime.now(), // Set to the current date and time
     );
-   
   }
 
   @override
@@ -64,6 +67,9 @@ class _StoryState extends State<Story> {
         modifiedTitle = detailData!.ceritaIndo
             .replaceAll('.', '\n')
             .replaceAll('..', '\n\n');
+        modifiedTitleswq = detailData!.ceritaSwq
+            .replaceAll('.', '\n')
+            .replaceAll('..', '\n\n');
         // indo =
         //     detailData.lirikIndo.replaceAll('.', '\n').replaceAll('..', '\n\n');
       });
@@ -79,6 +85,16 @@ class _StoryState extends State<Story> {
       }
     } catch (error) {
       print('Error fetching data: $error');
+    }
+  }
+
+  String getSelectedCerita() {
+    if (widget.language == 'Indonesia') {
+      return modifiedTitle;
+    } else if (widget.language == 'Sumbawa') {
+      return modifiedTitleswq;
+    } else {
+      return 'Cerita tidak ditemukan';
     }
   }
 
@@ -123,7 +139,7 @@ class _StoryState extends State<Story> {
         ),
         body: NotificationListener<ScrollNotification>(
           onNotification: (scrollNotification) {
-            if (scrollNotification.metrics.pixels > 200) {
+            if (scrollNotification.metrics.pixels > 100) {
               setState(() {
                 isQuizButtonEnabled = false;
               });
@@ -171,17 +187,12 @@ class _StoryState extends State<Story> {
                       // theinfectioncomesasfeveratnigh (10:1171)
                       child: SizedBox(
                         child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 318,
-                          ),
-                          child: Text(
-                            'The infection comes as fever at night. If you take ill, watch the veins— the tributary of blood travelling down the arms. If they remain as they ever did, you have nothing to fear. \n\nIf the blood darkens to an inky black, the infection has taken hold. \n\nThe infection comes as fever at night.',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 1.7142857143,
-                              color: Color(0xff000000),
+                          child: SizedBox(
+                            width: 500,
+                            height: 240,
+                            child: Image.network(
+                              'https://lombokfuntransport.com/back_office_story_book/${detailData?.background}',
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -201,8 +212,7 @@ class _StoryState extends State<Story> {
                         ),
                         children: [
                           TextSpan(
-                            text:
-                                '${detailData?.ceritaIndo ?? ''}',
+                            text: getSelectedCerita(),
                           ),
                           WidgetSpan(
                             child: SizedBox(height: 16),
@@ -232,7 +242,7 @@ class _StoryState extends State<Story> {
               children: [
                 // InkWell(
                 //   onTap: () {
-                
+
                 //   },
                 //   child: Container(
                 //     decoration: BoxDecoration(

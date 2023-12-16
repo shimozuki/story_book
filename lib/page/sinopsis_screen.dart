@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:story_book/controllers/detail_controller.dart';
@@ -15,6 +17,13 @@ class Sinopsis extends StatefulWidget {
 
 class _SinopsisState extends State<Sinopsis> {
   late Future<DetailModel?> _futureDetail;
+  String currentText = 'Indonesia';
+
+  void changeText() {
+    setState(() {
+      currentText = (currentText == 'Indonesia') ? 'Sumbawa' : 'Indonesia';
+    });
+  }
 
   @override
   void initState() {
@@ -45,6 +54,18 @@ class _SinopsisState extends State<Sinopsis> {
               DetailModel detail = snapshot.data!;
               String firstHalfCeritaIndo = detail.ceritaIndo
                   .substring(0, (detail.ceritaIndo.length / 2).round());
+              String firsHalfCeritaswq = detail.ceritaSwq
+                  .substring(0, (detail.ceritaIndo.length / 2).round());
+              String getSelectedCerita() {
+                if (currentText == 'Indonesia') {
+                  return firstHalfCeritaIndo;
+                } else if (currentText == 'Sumbawa') {
+                  return firsHalfCeritaswq;
+                } else {
+                  return 'Cerita tidak ditemukan';
+                }
+              }
+
               return Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 1.0,
@@ -61,7 +82,7 @@ class _SinopsisState extends State<Sinopsis> {
                       child: Stack(
                         children: [
                           Positioned(
-                            left: 13,
+                            left: 0,
                             top: 0,
                             child: Container(
                               width: 393,
@@ -73,13 +94,11 @@ class _SinopsisState extends State<Sinopsis> {
                                     top: 0,
                                     child: Align(
                                       child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                1.0,
+                                        width: 800,
                                         height: 1243,
-                                        child: Image.asset(
-                                          'assets/images/bg-4.png',
-                                          fit: BoxFit.cover,
+                                        child: Container(
+                                          color: const Color(
+                                              0xff8599ff), // Set the background color to sky blue
                                         ),
                                       ),
                                     ),
@@ -95,6 +114,11 @@ class _SinopsisState extends State<Sinopsis> {
                                         child: Image.network(
                                           'https://lombokfuntransport.com/back_office_story_book/${detail.featuredImage.original}',
                                           fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                                'assets/bg-5.jpg'); // Replace with your placeholder image asset
+                                          },
                                         ),
                                       ),
                                     ),
@@ -121,7 +145,7 @@ class _SinopsisState extends State<Sinopsis> {
                                                   margin: EdgeInsets.fromLTRB(
                                                       0, 0, 0, 0),
                                                   child: Text(
-                                                    '${detail!.title}',
+                                                    '${detail.title}',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
                                                       fontSize: 20,
@@ -193,14 +217,20 @@ class _SinopsisState extends State<Sinopsis> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            // Xj1 (10:1151)
-                                            'Indonesia',
-                                            style: GoogleFonts.plusJakartaSans(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.2125,
-                                              color: Color(0xff000000),
+                                          InkWell(
+                                            onTap: () {
+                                              changeText();
+                                            },
+                                            child: Text(
+                                              // Xj1 (10:1151)
+                                              currentText,
+                                              style:
+                                                  GoogleFonts.plusJakartaSans(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.2125,
+                                                color: Color(0xff000000),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -286,7 +316,7 @@ class _SinopsisState extends State<Sinopsis> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.8,
                                 child: Text(
-                                  '${firstHalfCeritaIndo}',
+                                  getSelectedCerita(),
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -325,7 +355,8 @@ class _SinopsisState extends State<Sinopsis> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Story(id: widget.id),
+                        builder: (context) =>
+                            Story(id: widget.id, language: currentText),
                       ),
                     );
                   },
