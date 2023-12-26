@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:story_book/models/cerita_model.dart';
 
 class CeritaController {
-  final String apiUrl = 'https://lombokfuntransport.com/back_office_story_book/api/get-all';
+  final String apiUrl = 'https://ceritarakyatsumbawa.com/api/get-all';
 
   Future<List<CeritaModel>> fetchCeritaData() async {
     final response = await http.get(Uri.parse(apiUrl));

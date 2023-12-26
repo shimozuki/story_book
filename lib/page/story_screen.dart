@@ -77,7 +77,7 @@ class _StoryState extends State<Story> {
       if (detailData!.featuredAudio.isNotEmpty) {
         audioPlayer.open(
           Audio.network(
-              'https://lombokfuntransport.com/lawas_backoffice/${detailData!.featuredAudio}'),
+              'https://ceritarakyatsumbawa.com/${detailData!.featuredAudio}'),
           autoStart: false,
           showNotification: true,
         );
@@ -191,7 +191,7 @@ class _StoryState extends State<Story> {
                             width: 500,
                             height: 240,
                             child: Image.network(
-                              'https://lombokfuntransport.com/back_office_story_book/${detailData?.background}',
+                              "https://ceritarakyatsumbawa.com/${detailData?.background}",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -270,7 +270,7 @@ class _StoryState extends State<Story> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QuizScreen(),
+                              builder: (context) => QuizScreen(id_cerita: detailData?.id ),
                             ),
                           );
                         },

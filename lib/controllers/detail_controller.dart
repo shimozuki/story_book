@@ -15,7 +15,7 @@ class DetailController {
     };
 
     final response = await http.post(
-      Uri.parse('https://lombokfuntransport.com/back_office_story_book/api/get-byid'),
+      Uri.parse('https://ceritarakyatsumbawa.com/api/get-byid'),
       headers: headers,
       body: jsonEncode(body),
     );

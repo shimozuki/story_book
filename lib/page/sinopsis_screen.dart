@@ -104,7 +104,7 @@ class _SinopsisState extends State<Sinopsis> {
                                     ),
                                   ),
                                   Positioned(
-                                    left: 120,
+                                    left: 130,
                                     top: MediaQuery.of(context).size.height *
                                         0.11,
                                     child: Align(
@@ -112,7 +112,7 @@ class _SinopsisState extends State<Sinopsis> {
                                         width: 152.63,
                                         height: 240,
                                         child: Image.network(
-                                          'https://lombokfuntransport.com/back_office_story_book/${detail.featuredImage.original}',
+                                          'https://ceritarakyatsumbawa.com/${detail.featuredImage.original}',
                                           fit: BoxFit.cover,
                                           errorBuilder:
                                               (context, error, stackTrace) {
@@ -124,41 +124,39 @@ class _SinopsisState extends State<Sinopsis> {
                                     ),
                                   ),
                                   Positioned(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.25,
+                                    left: 60,
                                     top: MediaQuery.of(context).size.height *
                                         0.03,
                                     child: Container(
-                                      width: 260,
+                                      width: 300,
                                       height: 48,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: double.infinity,
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: FractionallySizedBox(
+                                          widthFactor: 1.0,
+                                          child: Container(
+                                            height: 48,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
-                                                Container(
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 0, 0, 0),
-                                                  child: Text(
-                                                    '${detail.title}',
-                                                    style: GoogleFonts
-                                                        .plusJakartaSans(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 1.3325,
-                                                      color: Color.fromARGB(
-                                                          255, 250, 250, 250),
-                                                    ),
+                                                Text(
+                                                  '${detail.title}',
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts
+                                                      .plusJakartaSans(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w700,
+                                                    height: 1.3325,
+                                                    color: Color.fromARGB(
+                                                        255, 250, 250, 250),
                                                   ),
                                                 ),
                                                 Text(
                                                   'wahyudi',
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts
                                                       .plusJakartaSans(
                                                     fontSize: 14,
@@ -171,7 +169,7 @@ class _SinopsisState extends State<Sinopsis> {
                                               ],
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -204,8 +202,8 @@ class _SinopsisState extends State<Sinopsis> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(50, 1.19, 0, 1.19),
+                                      margin: EdgeInsets.fromLTRB(
+                                          50, 1.19, 0, 1.19),
                                       padding: EdgeInsets.fromLTRB(
                                           5.5, 2.75, 5.5, 2.75),
                                       height: double.infinity,

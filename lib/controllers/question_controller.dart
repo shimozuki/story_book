@@ -1,33 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:story_book/models/Questions.dart';
 import 'package:story_book/page/score/score_screen.dart';
 
-
-// We use get package for our state management
-
 class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
-  // Lets animated our progress bar
-
   late AnimationController _animationController;
   late Animation _animation;
-  // so that we can access our animation outside
   Animation get animation => this._animation;
 
   late PageController _pageController;
   PageController get pageController => this._pageController;
 
-  List<Question> _questions = sample_data
-      .map(
-        (question) => Question(
-            id: question['id'],
-            question: question['question'],
-            options: question['options'],
-            answer: question['answer_index']),
-      )
-      .toList();
+  List<Question> _questions = [];
   List<Question> get questions => this._questions;
 
   bool _isAnswered = false;
@@ -39,34 +27,28 @@ class QuestionController extends GetxController
   late int _selectedAns;
   int get selectedAns => this._selectedAns;
 
-  // for more about obs please check documentation
   RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => this._questionNumber;
 
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => this._numOfCorrectAns;
 
-  // called immediately after the widget is allocated memory
   @override
   void onInit() {
-    // Our animation duration is 60 s
-    // so our plan is to fill the progress bar within 60s
+    int? idCerita = Get.arguments?['id_cerita'];
+    _pageController = PageController(); // Initialize _pageController here
+    fetchDataFromApi(idCerita);
     _animationController =
         AnimationController(duration: Duration(seconds: 60), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
       ..addListener(() {
-        // update like setState
         update();
       });
 
-    // start our animation
-    // Once 60s is completed go to the next qn
     _animationController.forward().whenComplete(nextQuestion);
-    _pageController = PageController();
     super.onInit();
   }
 
-  // // called just before the Controller is deleted from memory
   @override
   void onClose() {
     super.onClose();
@@ -74,39 +56,59 @@ class QuestionController extends GetxController
     _pageController.dispose();
   }
 
+  // Fetch data from API
+  Future<void> fetchDataFromApi(int? idCerita) async {
+    final String apiUrl = 'https://ceritarakyatsumbawa.com/api/question';
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      // Add any additional headers as needed
+    };
+    final Map<String, dynamic> body = {
+      'id_cerita': idCerita, // Replace with the actual ID
+    };
+
+    try {
+      final response = await http.post(Uri.parse(apiUrl),
+          headers: headers, body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body)['data'];
+        _questions = data.map((json) => Question.fromJson(json)).toList();
+        print("datanya: $_questions");
+        update();
+      } else {
+        throw Exception('Failed to load questions: ${response.statusCode}');
+      }
+    } catch (error, stackTrace) {
+      print('Error fetching data: $error\n$stackTrace');
+      throw Exception('Failed to load questions');
+    }
+  }
+
   void checkAns(Question question, int selectedIndex) {
-    // because once user press any option then it will run
-    _isAnswered = true;
     _correctAns = question.answer;
     _selectedAns = selectedIndex;
 
-    if (_correctAns == _selectedAns) _numOfCorrectAns++;
-
-    // It will stop the counter
-    _animationController.stop();
+    if (_selectedAns == _correctAns) _numOfCorrectAns++;
+    _isAnswered = true;
     update();
-
-    // Once user select an ans after 3s it will go to the next qn
+    _animationController.stop();
     Future.delayed(Duration(seconds: 3), () {
       nextQuestion();
     });
+    print("scorenya :${_correctAns}");
   }
 
   void nextQuestion() {
-    if (_questionNumber.value != _questions.length) {
+    if (_questionNumber.value < _questions.length) {
       _isAnswered = false;
       _pageController.nextPage(
           duration: Duration(milliseconds: 250), curve: Curves.ease);
 
-      // Reset the counter
       _animationController.reset();
-
-      // Then start it again
-      // Once timer is finish go to the next qn
       _animationController.forward().whenComplete(nextQuestion);
     } else {
-      // Get package provide us simple way to naviigate another page
       Get.to(ScoreScreen());
+      print(_correctAns);
     }
   }
 

@@ -190,7 +190,7 @@ class _HomeState extends State<Home> {
                                                           BorderRadius.circular(
                                                               6),
                                                       child: Image.network(
-                                                        'https://lombokfuntransport.com/back_office_story_book/${cerita.featuredImage.original}',
+                                                        'https://ceritarakyatsumbawa.com/${cerita.featuredImage.original}',
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -402,7 +402,7 @@ class _HomeState extends State<Home> {
                                                               BorderRadius
                                                                   .circular(6),
                                                           child: Image.network(
-                                                            'https://lombokfuntransport.com/back_office_story_book/${cerita.featuredImage.original}',
+                                                            'https://ceritarakyatsumbawa.com/${cerita.featuredImage.original}',
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),

@@ -7,10 +7,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:story_book/controllers/upload_controller.dart';
 import 'package:story_book/layout/footer_bar.dart';
 import 'package:story_book/page/about_screen.dart';
 import 'package:story_book/page/home_screen.dart';
 import 'package:story_book/page/quiz_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Upload extends StatefulWidget {
   const Upload({super.key});
@@ -21,6 +24,7 @@ class Upload extends StatefulWidget {
 
 class _UploadState extends State<Upload> {
   int _selectedIndex = 1;
+  final _uploadService = UploadService();
 
   void _onTabTapped(int index) {
     setState(() {
@@ -42,38 +46,34 @@ class _UploadState extends State<Upload> {
   final _formKey = GlobalKey<FormState>();
 
   XFile? image;
+  XFile? background;
 
   final ImagePicker picker = ImagePicker();
 
-  // String? _selectedFilePath;
-
-  // Future<void> _pickFile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: [
-  //       'pdf',
-  //       'doc',
-  //       'docx'
-  //     ], // Add more extensions if needed
-  //   );
-
-  //   if (result != null) {
-  //     setState(() {
-  //       _selectedFilePath = result.files.single.path;
-  //     });
-  //   }
-  // }
-
   String? _selectedFilePath;
-
-  Future<void> _pickFile() async {
-    final imagePicker = ImagePicker();
-    final XFile? result =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-
+  String? _selectedFilePathD;
+  Future<void> _pickAudio() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.audio);
     if (result != null) {
       setState(() {
-        _selectedFilePath = result.path;
+        _selectedFilePathD = result.files.single.path!;
+      });
+    }
+  }
+
+  String? _name;
+  String? _whatsapp;
+  String? _email;
+  String? _judul_cerita;
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.any);
+    if (result != null) {
+      setState(() {
+        _selectedFilePath = result.files.single.path!;
+        print("file excel : ${_selectedFilePath}");
       });
     }
   }
@@ -85,6 +85,59 @@ class _UploadState extends State<Upload> {
     setState(() {
       image = img;
     });
+  }
+
+  Future getBackgoriund(ImageSource media) async {
+    var bg = await picker.pickImage(source: media);
+
+    setState(() {
+      background = bg;
+    });
+  }
+
+  void myAlertbg() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getBackgoriund(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getBackgoriund(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   void myAlert() {
@@ -229,58 +282,7 @@ class _UploadState extends State<Upload> {
                                       }
                                       return null;
                                     },
-                                    // onChanged: (value) => _name = value,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color(0x11000000),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          // ignore: sized_box_for_whitespace
-                          child: Container(
-                            width: 72,
-                            height: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        0, 2.5, 399, 0),
-                                    width: 24,
-                                    height: 24,
-                                    child: const Icon(
-                                      Icons.room,
-                                      color: Color.fromARGB(78, 0, 0, 0),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(34, 0, 0, 0),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                                  child: TextFormField(
-                                    decoration: const InputDecoration.collapsed(
-                                      hintText: "Alamat",
-                                    ),
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    // onChanged: (value) => _name = value,
+                                    onChanged: (value) => _name = value,
                                   ),
                                 ),
                               ],
@@ -331,7 +333,7 @@ class _UploadState extends State<Upload> {
                                       }
                                       return null;
                                     },
-                                    // onChanged: (value) => _name = value,
+                                    onChanged: (value) => _whatsapp = value,
                                   ),
                                 ),
                               ],
@@ -382,7 +384,7 @@ class _UploadState extends State<Upload> {
                                       }
                                       return null;
                                     },
-                                    // onChanged: (value) => _name = value,
+                                    onChanged: (value) => _email = value,
                                   ),
                                 ),
                               ],
@@ -432,8 +434,7 @@ class _UploadState extends State<Upload> {
                                       }
                                       return null;
                                     },
-                                    // onChanged: (value) =>
-                                    //     _nama_perusahaan = value,
+                                    onChanged: (value) => _judul_cerita = value,
                                   ),
                                 ),
                               ],
@@ -450,7 +451,7 @@ class _UploadState extends State<Upload> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: GestureDetector(
-                            onTap: _pickFile,
+                            onTap: _pickAudio,
                             child: Row(
                               children: [
                                 Container(
@@ -465,8 +466,8 @@ class _UploadState extends State<Upload> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    _selectedFilePath != null
-                                        ? _selectedFilePath!
+                                    _selectedFilePathD != null
+                                        ? _selectedFilePathD!
                                         : "Pilih Audio",
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -475,38 +476,38 @@ class _UploadState extends State<Upload> {
                             ),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            // if (_isChecked &&
-                            //     _formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            //   _registerUser();
-                            // }
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            width: double.infinity,
-                            height: 46,
-                            decoration: BoxDecoration(
-                              color: const Color(0xff8599ff),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Center(
-                              child: Center(
-                                child: Text(
-                                  "Download Template",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.1725,
-                                    color: const Color(0xffffffff),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // TextButton(
+                        //   onPressed: () {
+                        //     // if (_isChecked &&
+                        //     //     _formKey.currentState!.validate()) {
+                        //     //   _formKey.currentState!.save();
+                        //     //   _registerUser();
+                        //     // }
+                        //   },
+                        //   child: Container(
+                        //     margin: const EdgeInsets.only(bottom: 10),
+                        //     width: double.infinity,
+                        //     height: 46,
+                        //     decoration: BoxDecoration(
+                        //       color: const Color(0xff8599ff),
+                        //       borderRadius: BorderRadius.circular(50),
+                        //     ),
+                        //     child: Center(
+                        //       child: Center(
+                        //         child: Text(
+                        //           "Download Template",
+                        //           textAlign: TextAlign.center,
+                        //           style: GoogleFonts.plusJakartaSans(
+                        //             fontSize: 14,
+                        //             fontWeight: FontWeight.w700,
+                        //             height: 1.1725,
+                        //             color: const Color(0xffffffff),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 18),
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -561,10 +562,10 @@ class _UploadState extends State<Upload> {
                                       ),
                                     ),
                                   ),
-                                  (image == null)
+                                  (background == null)
                                       ? ElevatedButton(
                                           onPressed: () {
-                                            myAlert();
+                                            myAlertbg();
                                           },
                                           style: ElevatedButton.styleFrom(
                                             padding: EdgeInsets.all(35.0),
@@ -593,8 +594,8 @@ class _UploadState extends State<Upload> {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                             image: DecorationImage(
-                                              image:
-                                                  FileImage(File(image!.path)),
+                                              image: FileImage(
+                                                  File(background!.path)),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -666,12 +667,59 @@ class _UploadState extends State<Upload> {
                           ],
                         ),
                         TextButton(
-                          onPressed: () {
-                            // if (_isChecked &&
-                            //     _formKey.currentState!.validate()) {
-                            //   _formKey.currentState!.save();
-                            //   _registerUser();
-                            // }
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+
+                              // Add any additional logic or validation here before calling the service
+
+                              // Call the uploadStory method from UploadService
+                              Map<String, dynamic> uploadResult =
+                                  await _uploadService.uploadStory(
+                                judul: _judul_cerita!,
+                                whatsapp: _whatsapp!,
+                                image: image != null ? File(image!.path) : null,
+                                background: background != null
+                                    ? File(background!.path)
+                                    : null,
+                                // Add other parameters as needed
+                                nama: _name!,
+                                email: _email!,
+                                audio: _selectedFilePathD != null
+                                    ? File(_selectedFilePathD!)
+                                    : null,
+                                selectFile: _selectedFilePath != null
+                                    ? File(_selectedFilePath!)
+                                    : null,
+                              );
+
+                              print("judulnya adalah : ${_judul_cerita}");
+                              // Handle the result as needed
+                              if (uploadResult['success']) {
+                                Fluttertoast.showToast(
+                                  msg: 'Story uploaded successfully',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                // Additional logic after successful upload
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg:
+                                      'Error uploading story: ${uploadResult['message']}',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                // Additional logic for handling upload failure
+                              }
+                            }
                           },
                           child: Container(
                             margin: const EdgeInsets.only(top: 10),

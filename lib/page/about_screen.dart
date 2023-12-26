@@ -105,7 +105,7 @@ class _AboutState extends State<About> {
                           width: 495,
                           height: 324,
                           child: Image.network(
-                              'https://lombokfuntransport.com/back_office_story_book/${aboutData!.image}'),
+                              'https://ceritarakyatsumbawa.com/${aboutData!.image}'),
                         ),
                         Container(
                           // homeindicatorEVR (35461:438)

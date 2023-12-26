@@ -4,7 +4,7 @@ import 'package:story_book/models/about_model.dart';
 
 class AboutController {
   Future<AboutModel?> fetchData() async {
-    final response = await http.get(Uri.parse('https://lombokfuntransport.com/back_office_story_book/api/get-about'));
+    final response = await http.get(Uri.parse('https://ceritarakyatsumbawa.com/api/get-about'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
