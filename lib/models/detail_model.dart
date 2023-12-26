@@ -8,9 +8,11 @@ class DetailModel {
   String featuredAudio;
   String active;
   String userId;
+  String name;
   String featuredPost;
   DateTime createdAt;
   DateTime updatedAt;
+  
 
   DetailModel({
     required this.id,
@@ -22,6 +24,7 @@ class DetailModel {
     required this.featuredAudio,
     required this.active,
     required this.userId,
+    required this.name,
     required this.featuredPost,
     required this.createdAt,
     required this.updatedAt,
@@ -38,6 +41,7 @@ class DetailModel {
       featuredAudio: json['featured_audio'],
       active: json['active'],
       userId: json['user_id'],
+      name: json['name'],
       featuredPost: json['featured_post'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),

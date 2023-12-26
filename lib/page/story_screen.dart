@@ -45,9 +45,10 @@ class _StoryState extends State<Story> {
       featuredAudio: '',
       active: '',
       userId: '',
+      name: '',
       featuredPost: '',
       createdAt: DateTime.now(), // Set to the current date and time
-      updatedAt: DateTime.now(), // Set to the current date and time
+      updatedAt: DateTime.now(),  //Set to the current date and time
     );
   }
 

@@ -20,12 +20,27 @@ class DetailController {
       body: jsonEncode(body),
     );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      final Map<String, dynamic> dataMap = data['data'];
+    print(response.body);
 
-      if (dataMap.isNotEmpty) {
-        return DetailModel.fromJson(dataMap);
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body);
+
+      if (data is Map<String, dynamic> && data.containsKey('data')) {
+        // Check if 'data' is a list
+        if (data['data'] is List) {
+          List<dynamic> dataList = data['data'];
+          if (dataList.isNotEmpty) {
+            // Handle list data accordingly, maybe iterate through it or handle each item individually
+            return DetailModel.fromJson(dataList[0]);
+          }
+        } else if (data['data'] is Map<String, dynamic>) {
+          // If 'data' is a map, proceed as before
+          final Map<String, dynamic> dataMap = data['data'];
+
+          if (dataMap.isNotEmpty) {
+            return DetailModel.fromJson(dataMap);
+          }
+        }
       }
     }
 

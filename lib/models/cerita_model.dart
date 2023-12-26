@@ -8,6 +8,7 @@ class CeritaModel {
   final String featuredAudio;
   // final int active;
   final String userId;
+  final String name;
   // final int featuredPost;
   // final String createdAt;
   // final String updatedAt;
@@ -21,6 +22,7 @@ class CeritaModel {
     required this.background,
     required this.featuredAudio,
     required this.userId,
+    required this.name,
   });
 
   factory CeritaModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class CeritaModel {
       background: json['background'],
       featuredAudio: json['featured_audio'],
       userId: json['user_id'],
+      name: json['name'],
     );
   }
 }

@@ -123,16 +123,16 @@ class _HomeState extends State<Home> {
                                     //     ),
                                     //   ),
                                     // ),
-                                    Container(
-                                      // vector1Pgf (0:121)
-                                      width: 3.5,
-                                      height: 7,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        size: 10,
-                                        color: Color(0xff8599ff),
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   // vector1Pgf (0:121)
+                                    //   width: 3.5,
+                                    //   height: 7,
+                                    //   child: Icon(
+                                    //     Icons.arrow_forward_ios_outlined,
+                                    //     size: 10,
+                                    //     color: Color(0xff8599ff),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -229,7 +229,7 @@ class _HomeState extends State<Home> {
                                                                   .fromLTRB(0,
                                                                   0, 0, 6.05),
                                                           child: Text(
-                                                            'Wahyudi',
+                                                            '${cerita.name}',
                                                             style: GoogleFonts
                                                                 .roboto(
                                                               fontSize: 12,
@@ -448,7 +448,7 @@ class _HomeState extends State<Home> {
                                                                       0,
                                                                       6.05),
                                                               child: Text(
-                                                                'Wahyudi',
+                                                                '${cerita.name}',
                                                                 style:
                                                                     GoogleFonts
                                                                         .roboto(

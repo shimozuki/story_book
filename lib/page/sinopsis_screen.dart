@@ -155,7 +155,7 @@ class _SinopsisState extends State<Sinopsis> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'wahyudi',
+                                                  '${detail.name}',
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts
                                                       .plusJakartaSans(
@@ -271,7 +271,7 @@ class _SinopsisState extends State<Sinopsis> {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: '432 View',
+                                            text: '1 Views',
                                             style: GoogleFonts.plusJakartaSans(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w600,
